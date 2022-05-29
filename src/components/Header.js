@@ -1,25 +1,75 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import { withRouter, Link } from "react-router-dom";
 import Hamburger from "./Hamburger";
 
-const Header = () => {
+const Header = ({history}) => {
+  // state for menu button
+  const [state, setState] = useState({
+    initial: false,
+    clicked: null,
+    menuName: "Menu"
+  });
+  // state for disabled button
+  const [disabled, setDisabled] = useState(false);
+
+  // use effect for page changes
+  useEffect(() => {
+    //listen for page chenges
+    history.listen(() =>{
+      setState({clicked: false, menuName:'Menu'});
+    });
+  });
+  
+  
+
+  const handleMenu = () => {
+    disableMenu();
+    //preventDefault();
+    if(state.initial === false){
+      setState({
+        initial: null,
+        clicked: true,
+        menuName: "Close"
+    });
+    }else if(state.clicked === true) {
+      setState({
+        clicked: false,
+        menuName: "Menu"
+    });
+    }else if(state.clicked === false) {
+      setState({
+        clicked: !state.clicked,
+        menuName: "Close"
+    });   
+  }
+};
+// determine if our menu button should disable
+const disableMenu = () => {
+  setDisabled(!disabled);
+  setTimeout(() => {
+    setDisabled(false)
+  }, 1200);   
+};
+
   return (
-   <header>
-      <div className='container'>
+    <header>
+  <div className='container'>
         <div className='wrapper'>
           <div className="inner-header">
-             <div className="logo">
-               <Link to='/'>UNIDEV.</Link>
-             </div>
-             <div className="menu">
-              <button>Menu</button>
+            <div className="logo">
+            <Link to='/'>UNIDEV.</Link>
             </div>
+            <div className="menu">
+            <button disabled={disabled} onClick={handleMenu}>
+            Menu
+            </button>
           </div>
         </div>
       </div>
-      <Hamburger/>        
-   </header>
+    </div>
+    <Hamburger state={state}/>        
+    </header>
   );
 };
 
-export default Header;
+export default withRouter(Header);

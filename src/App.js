@@ -1,9 +1,12 @@
 import React from "react";
 import "./App.scss";
 import Header from "./components/Header";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
+
+
+
   return (
     <Router>
       <div className='App'>
@@ -13,12 +16,12 @@ function App() {
             <div className='home'>
  
 
-              <Routes> 
-                <Route exact path='/' element={<Home/>} />
-                <Route exact path='/opportunities' element={<Opportunities/>} />
-                <Route exact path='/solutions' element={<Solutions/>}  />
-                <Route exact path='/contact-us' element={<Contact/>}  />
-              </Routes>
+              <Switch> 
+                <Route exact path="/" component={Home} />
+                <Route exact path="/opportunities" component={Opportunities} />
+                <Route exact path="/solutions" component={Solutions}  />
+                <Route exact path="/contact-us" component={Contact}  />
+              </Switch>
             </div>
           </div>
         </div>
