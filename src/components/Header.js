@@ -2,8 +2,8 @@ import React, {useState, useEffect} from "react";
 import { withRouter, Link } from "react-router-dom";
 import Hamburger from "./Hamburger";
 
-const Header = ({history}) => {
-  // state for menu button
+const Header = ({ history }) => {
+  // state for disabled menu button
   const [state, setState] = useState({
     initial: false,
     clicked: null,
@@ -14,17 +14,16 @@ const Header = ({history}) => {
 
   // use effect for page changes
   useEffect(() => {
-    //listen for page chenges
-    history.listen(() =>{
-      setState({clicked: false, menuName:'Menu'});
-    });
-  });
-  
+    //listen for page changes
+    history.listen(() => {
+      setState({clicked: false, menuName:"Menu"});
+    })
+  })
+
   
 
   const handleMenu = () => {
     disableMenu();
-    //preventDefault();
     if(state.initial === false){
       setState({
         initial: null,
@@ -33,7 +32,7 @@ const Header = ({history}) => {
     });
     }else if(state.clicked === true) {
       setState({
-        clicked: false,
+        clicked: !state.clicked,
         menuName: "Menu"
     });
     }else if(state.clicked === false) {
